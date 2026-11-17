@@ -110,7 +110,8 @@ def verify(require_complete: bool = False) -> list[str]:
             words = len(body.split())
             if not 80 <= words <= 200:
                 pending.append(f'independent conclusion {number}: {words} words, expected about 80–200')
-    assert conclusion.rstrip().endswith('I wrote this file myself, without any AI tool.')
+    if not conclusion.rstrip().endswith('I wrote this file myself, without any AI tool.'):
+        pending.append('CONCLUSION.md declares AI assistance; this does not meet the assignment\'s unaided-writing rule')
     print('Notebook structure, Python syntax, original toolbox, and answer locations checked.')
     if pending:
         print('PENDING:\n' + '\n'.join(f'- {p}' for p in pending))
